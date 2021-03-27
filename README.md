@@ -37,8 +37,8 @@
   - `strokeRestoreDuration: number` - Stroke restore animation time duration. Unit in seconds. Default value: `0.3`.
   - `strokeFillAnimation: string` - Defines the animation type when stroke is charging. Default value: `ease-out`.
   - `strokeRestoreAnimation: string` - Defines the animation type when reducing stroke. Default value: `ease-out`.
-  - `enableChargeAnimation: boolean` -Use charging animation. Default value: `false`.
-  - `reduceIcon: boolean` -Reduce icon button in the same time as the main animation. Default value: `true`.
+  - `enableChargeAnimation: boolean` - Use charging animation. Default value: `false`.
+  - `reduceIcon: boolean` - Reduce icon button in the same time as the main animation. Default value: `true`.
   
 # Demostration
 
