@@ -1,0 +1,16 @@
+<div id="ipc-container" [style.width.px]="size" [style.height.px]="size">
+
+  <svg id="ipc-button" xmlns="http://www.w3.org/2000/svg" [style.width.px]="size" [style.height.px]="size" viewBox="0 0 512 512">
+    <circle cx="50%" cy="50%" [style.r]="buttonRadius + '%'" [style.fill]="disabled ? disabledColor : color"/>
+  </svg>
+  
+  <svg id="ipc-stroke" xmlns="http://www.w3.org/2000/svg" [style.width.px]="size" [style.height.px]="size" viewBox="0 0 512 512">
+    <circle transform="rotate(-90 256 256)" cx="50%" cy="50%" [style.r]="strokeRadius + '%'" [style.stroke]="strokeColor" [style.stroke-width]="strokeSize + '%' " fill="none" pathLength="360" stroke-dasharray="360" stroke-dashoffset="360" stroke-linecap="round"/>
+  </svg>
+
+  <div id="ipc-icon"  [style.width.px]="size" [style.height.px]="size">
+    <div id="ipc-icon-contentent-svg" [style.fill]="iconColor">
+      <ng-content></ng-content>
+    </div>
+  </div>
+</div>

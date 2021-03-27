@@ -1,0 +1,27 @@
+:host,
+:host #ipc-container{
+    position: relative;
+}
+
+:host #ipc-button,
+:host #ipc-stroke,
+:host #ipc-icon{
+    position: absolute;
+}
+
+:host #ipc-icon,
+:host #ipc-icon-contentent-svg{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+:host #ipc-icon-contentent-svg{
+    height: 32%;
+    width: 32%
+}
+
+.circle-shadow {
+    -webkit-filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, .7));
+    filter: drop-shadow( 0px 0px 3px rgba(0, 0, 0, .7));
+}
