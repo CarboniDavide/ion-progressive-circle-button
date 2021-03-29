@@ -51,13 +51,12 @@ export class IonProgressiveCircleButtonComponent implements AfterViewInit, OnIni
   @Input() strokeRestoreAnimation: string = this.STROKE_RESTORE_ANIMATION;
   @Input() enableChargeAnimation: boolean = this.ENABLE_CHARGE_ANIMATION;
   @Input() reduceIcon: boolean = this.REDUCE_ICON;
-
-
   @Output() onChargeComplete: EventEmitter<boolean> = new EventEmitter<boolean>();
 
   private _stroke: any;
   private _button: any;
   private _icon: any;
+  private _cover: any;
 
   private _isButtonRestoring?: boolean = null;
   private _isStrokeRestoring?: boolean = null;
@@ -75,6 +74,7 @@ export class IonProgressiveCircleButtonComponent implements AfterViewInit, OnIni
   ngOnInit(): void {
     this._button = this._element.nativeElement.querySelector("#ipc-button circle");
     this._stroke = this._element.nativeElement.querySelector("#ipc-stroke circle");
+    this._cover = this._element.nativeElement.querySelector("#ipc-cover circle");
     this._icon = this._element.nativeElement.querySelector("#ipc-icon");
     
     // convert stroke unit to 50 instead of 100
@@ -94,14 +94,13 @@ export class IonProgressiveCircleButtonComponent implements AfterViewInit, OnIni
 
     this._renderer.listen(this._element.nativeElement, "touchstart", this._startAnimation.bind(this));
     this._renderer.listen(this._element.nativeElement, "touchend", this._stopAnimation.bind(this));
-
-    this._renderer.setStyle(this._stroke, "transition", "none");
-    this._renderer.setStyle(this._button, "transition", "none");
-    this._renderer.setStyle(this._icon, "transition", this.radiusAnimation + " " + this.radiusAnimationDuration + "s");
-    this._renderer.setStyle(this._stroke, "stroke-dashoffset", (360 - this.startAt));
-
     this._renderer.listen(this._stroke, "transitionend", this._strokeTransitionEnd.bind(this));
     this._renderer.listen(this._button, "transitionend", this._buttonTransitionEnd.bind(this));
+
+    this._renderer.setStyle(this._stroke, "stroke-dashoffset", (360 - this.startAt));
+    this._renderer.setStyle(this._icon, "transition", this.radiusAnimation + " " + this.radiusAnimationDuration + "s");
+    this._renderer.setStyle(this._button, "transition", this.radiusAnimation + " " + this.radiusAnimationDuration + "s");
+    this._renderer.setStyle(this._cover, "transition", this.radiusAnimation + " " + this.radiusAnimationDuration + "s");
   }
 
   private _checkInputValues(): boolean{
@@ -121,6 +120,7 @@ export class IonProgressiveCircleButtonComponent implements AfterViewInit, OnIni
     this._isStrokeRestoring = null;
     this._domCtrl.write(()=> {
       this._renderer.setStyle(this._button, "r", this.buttonRadius + "%" );
+      this._renderer.setStyle(this._cover, "r", this.buttonRadius + "%" );
       if (this.reduceIcon) { this._renderer.setStyle(this._icon, "transform", "scale(1)"); }
     });
   }
@@ -129,8 +129,8 @@ export class IonProgressiveCircleButtonComponent implements AfterViewInit, OnIni
     this._isButtonRestoring = false;
     this._isStrokeRestoring = null;
     this._domCtrl.write(()=> {
-      this._renderer.setStyle(this._button, "transition", this.radiusAnimation + " " + this.radiusAnimationDuration + "s");
       this._renderer.setStyle(this._button, "r", (50 - (this.reduceRadius/2)) + "%" );
+      this._renderer.setStyle(this._cover, "r", (50 - (this.reduceRadius/2)) + "%" );
       if (this.reduceIcon) { this._renderer.setStyle(this._icon, "transform", "scale(" + ( (100 - this.reduceRadius) / 100) + ")"); }
     });
   }
@@ -154,11 +154,13 @@ export class IonProgressiveCircleButtonComponent implements AfterViewInit, OnIni
   }
 
   private _startAnimation(){
+    this._renderer.addClass(this._cover, "hover-cover");
     if (this._isStrokeRestoring == null) { this._reduceButton(); return; }
     if (this._isStrokeRestoring) { this._increaseStroke(); return; }
   }
 
   private _stopAnimation(){ 
+    this._renderer.removeClass(this._cover, "hover-cover");
     if (this._isButtonRestoring == false) { this._restoreButton(); return; }
     if (this._isButtonRestoring) { return; }
     if ( (this._strokeChargeComplete) && (!this.reverseAnim) ) {
@@ -182,6 +184,7 @@ export class IonProgressiveCircleButtonComponent implements AfterViewInit, OnIni
       this._strokeChargeComplete = false;
     }
     if (this._isButtonRestoring) { return; }
+    if (this._isButtonRestoring == null) { return; }
     this._increaseStroke();
   }
 }

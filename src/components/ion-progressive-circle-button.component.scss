@@ -5,7 +5,8 @@
 
 :host #ipc-button,
 :host #ipc-stroke,
-:host #ipc-icon{
+:host #ipc-icon,
+:host #ipc-cover{
     position: absolute;
 }
 
@@ -24,4 +25,8 @@
 .circle-shadow {
     -webkit-filter: drop-shadow(0px 0px 3px rgba(0, 0, 0, .7));
     filter: drop-shadow( 0px 0px 3px rgba(0, 0, 0, .7));
+}
+
+:host .hover-cover {
+    fill: rgba(158, 135, 135, 0.2);
 }
