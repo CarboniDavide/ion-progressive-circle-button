@@ -8,8 +8,8 @@
     <circle transform="rotate(-90 256 256)" cx="50%" cy="50%" [style.r]="strokeRadius + '%'" [style.stroke]="strokeColor" [style.stroke-width]="strokeSize + '%' " fill="none" pathLength="360" stroke-dasharray="360" stroke-dashoffset="360" stroke-linecap="round"/>
   </svg>
 
-  <div id="ipc-icon"  [style.width.px]="size" [style.height.px]="size">
-    <div id="ipc-icon-contentent-svg" [style.fill]="iconColor">
+  <div id="ipc-icon" [style.width.px]="size" [style.height.px]="size">
+    <div id="ipc-icon-contentent" [style.fill]="iconColor">
       <ng-content></ng-content>
     </div>
   </div>

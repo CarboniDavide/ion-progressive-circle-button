@@ -11,15 +11,15 @@
 }
 
 :host #ipc-icon,
-:host #ipc-icon-contentent-svg{
+:host #ipc-icon-contentent{
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
-:host #ipc-icon-contentent-svg{
+:host #ipc-icon-contentent{
     height: 32%;
-    width: 32%
+    width: 32%;
 }
 
 .circle-shadow {
