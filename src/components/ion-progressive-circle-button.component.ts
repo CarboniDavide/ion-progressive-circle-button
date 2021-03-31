@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, EventEmitter, Input, OnInit, Output, Renderer2 } from '@angular/core';
-import { DomController } from '@ionic/angular';
+import { DomController, Platform } from '@ionic/angular';
 
 @Component({
   selector: 'ion-progressive-circle-button',
@@ -8,8 +8,8 @@ import { DomController } from '@ionic/angular';
 })
 export class IonProgressiveCircleButtonComponent implements AfterViewInit, OnInit {
 
-  readonly USE_SHADOW: boolean = true;                                // use shadow css style          
-  readonly REVERSE_ANIM: boolean = true;                              // reverese animation after stroke bar is charge is complete    
+  readonly USE_SHADOW: boolean = true;                               // use shadow css style          
+  readonly REVERSE_ANIM: boolean = true;                             // reverese animation after stroke bar is charge is complete    
   readonly DISABLED: boolean = false;                                 // disable button
   readonly START_AT: number = 0;                                      // start stroke point animation in deg  
   readonly END_AT: number = 360;                                      // stop stroke point animation in deg
@@ -26,7 +26,7 @@ export class IonProgressiveCircleButtonComponent implements AfterViewInit, OnIni
   readonly STROKE_FILL_DURATION: number = 3;                          // stroke increase animation duration in seconds    
   readonly STROKE_RESTORE_DURATION: number = 0.3;                     // stroke decrease animation duration in seconds  
   readonly STROKE_FILL_ANIMATION: string = "ease-out";                // stroke increase animation type
-  readonly STROKE_RESTORE_ANIMATION: string = "ease-out";             // stroke decrease animation type
+  readonly STROKE_RESTORE_ANIMATION: string = "ease-out";          // stroke decrease animation type
   readonly ENABLE_CHARGE_ANIMATION: boolean = false;                  // anable stroke animation
   readonly REDUCE_ICON: boolean = true;                               // reduce icon in the same time
   
@@ -67,7 +67,8 @@ export class IonProgressiveCircleButtonComponent implements AfterViewInit, OnIni
   constructor(
     private _element: ElementRef,
     private _domCtrl: DomController,
-    private _renderer: Renderer2
+    private _renderer: Renderer2,
+    private _platform: Platform
   ) { }
 
 
@@ -92,8 +93,8 @@ export class IonProgressiveCircleButtonComponent implements AfterViewInit, OnIni
   ngAfterViewInit(): void {
     if (!this._checkInputValues()) { return; }
 
-    this._renderer.listen(this._element.nativeElement, "touchstart", this._startAnimation.bind(this));
-    this._renderer.listen(this._element.nativeElement, "touchend", this._stopAnimation.bind(this));
+    this._renderer.listen(this._element.nativeElement, this._platform.is("desktop") ? "mousedown" : "touchstart", this._startAnimation.bind(this));
+    this._renderer.listen(this._element.nativeElement, this._platform.is("desktop") ? "mouseup" : "touchend", this._stopAnimation.bind(this));
     this._renderer.listen(this._stroke, "transitionend", this._strokeTransitionEnd.bind(this));
     this._renderer.listen(this._button, "transitionend", this._buttonTransitionEnd.bind(this));
 
